@@ -26,3 +26,19 @@ class ModelTest(TestCase):
         email = "ali@GMAIL.COM"
         user = get_user_model().objects.create_user(email, 'test123')
         self.assertEqual(user.email, email.lower())
+
+    def test_new_user_invalid_email(self):
+        """
+        check email address validation
+        :return:
+        """
+        with self.assertRaises(ValueError):
+            get_user_model().objects.create_user(None, 'test122')
+
+    def test_create_super_user(self):
+        user = get_user_model().objects.create_super_user(
+            'ali@ali.com'
+            , 'test123'
+        )
+        self.assertTrue(user.is_staff)
+        self.assertTrue(user.is_superuser)
